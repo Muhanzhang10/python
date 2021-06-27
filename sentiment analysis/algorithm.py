@@ -15,8 +15,44 @@ instructions
 2 对于里面评论依次进行分析：抓取重点三句话，对三句话依次进行情感分析，最后求平均，为该评论的情感值
 3 对所有评论结果进行加权（根据点赞数量）取平均
 '''
+files = os.listdir(r'/Users/zhangmuhan/Desktop/杂项/Python课程/git/sentiment analysis/data')
+
+for file in files:
+    pre = '/Users/zhangmuhan/Desktop/杂项/Python课程/git/sentiment analysis/data'
+    path = pre + '/' + file
+    wb = load_workbook(path)
+    name = wb.sheetnames[0]
+    ws = wb[name]
+    row = 2
+    row2 = 2
+    #创建一个新的excel文件
+    wb2 = Workbook()
+    ws2 = wb2.active
+    ws2.cell(row = 1, column = 1).value = "发布账号"
+    ws2.cell(row = 1, column = 2).value = "正文"
+    ws2.cell(row = 1, column = 3).value = "点赞数"
+    ws2.cell(row = 1, column = 4).value = "评论数"
+    while True:
+        if ws.cell(row = row, column = 1).value == None:
+            break
+        if ws.cell(row=row, column = 5).value >= 200 or ws.cell(row=row, column = 6).value >= 20:
+            ws2.cell(row = row2, column = 1).value = ws.cell(row =row, column = 1).value #发布账号
+            ws2.cell(row = row2, column = 2).value = ws.cell(row =row, column = 3).value #正文
+            ws2.cell(row = row2, column = 3).value = ws.cell(row =row, column = 5).value #点赞数
+            ws2.cell(row = row2, column = 4).value = ws.cell(row =row, column = 6).value #评论数
+            row2 += 1
+        row += 1
+    wb2.save('/Users/zhangmuhan/Desktop/杂项/Python课程/git/sentiment analysis/output/' + file)
 
 
+
+
+        
+
+
+
+
+        
 
 
 
